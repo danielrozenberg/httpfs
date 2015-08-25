@@ -2,12 +2,12 @@
 
 from errno import EIO, ENOENT
 import logging
-import requests
 from stat import S_IFDIR, S_IFREG
 from sys import argv, exit
 from threading import Timer
 from time import time
 
+import requests
 from fuse import FUSE, FuseOSError, Operations, LoggingMixIn
 
 CLEANUP_INTERVAL = 60
@@ -32,7 +32,7 @@ class HttpFs(LoggingMixIn, Operations):
             r = requests.get(url)
             if r.status_code == 200:
                 content = r.content
-                attr = dict(st_mode=(S_IFREG | 0644), st_nlink=1,
+                attr = dict(st_mode=(S_IFREG | 0o644), st_nlink=1,
                             st_size=len(content), st_ctime=time(), st_mtime=time(),
                             st_atime=time())
                 self.files[path] = dict(time=time(), attr=attr, content=content)
@@ -40,7 +40,7 @@ class HttpFs(LoggingMixIn, Operations):
             else:
                 raise FuseOSError(ENOENT)
         else:
-            return dict(st_mode=(S_IFDIR | 0555), st_nlink=2)
+            return dict(st_mode=(S_IFDIR | 0o555), st_nlink=2)
 
     def read(self, path, size, offset, fh):
         if self.files[path]:
@@ -53,7 +53,7 @@ class HttpFs(LoggingMixIn, Operations):
     def cleanup(self):
         now = time()
         num_files_before = len(self.files)
-        self.files = {k: v for k, v in self.files.iteritems() if now - v['time'] < CLEANUP_EXPIRED}
+        self.files = {k: v for k, v in self.files.items() if now - v['time'] < CLEANUP_EXPIRED}
         num_files_after = len(self.files)
         if num_files_before != num_files_after:
             logging.debug('Truncated cache from %d to %d files' % (num_files_before, num_files_after))
@@ -83,4 +83,3 @@ if __name__ == '__main__':
     logging.debug("Starting...")
 
     fuse = FUSE(HttpFs(schema), mountpoint, foreground=True)
-

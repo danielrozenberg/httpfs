@@ -1,0 +1,2 @@
+fusepy==2.0.2
+requests==2.7.0
