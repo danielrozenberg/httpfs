@@ -42,4 +42,4 @@ NOTICE
 * See instructions on how to stop the filesystem!
 * Linux ignores multiple `/`-slashes, so trying to access the file `http:/example.com/`, `http://example.com/` and `http:///////////example.com/` will all lead to the same file
 * The filesystem caches all files that were accessed with it in RAM for approximately 60 seconds
-* This FUSE filesystem is EXPERIMENTAL and far from being stable enough for any work, and comes under NO WARRENTY (and any other big scary all-caps things that can be said)
+* This FUSE filesystem is EXPERIMENTAL and far from being stable enough for any work, and comes under NO WARRANTY (and any other big scary all-caps things that can be said)
