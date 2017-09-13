@@ -1,2 +1,2 @@
 fusepy==2.0.4
-requests==2.18.3
+requests==2.18.4
