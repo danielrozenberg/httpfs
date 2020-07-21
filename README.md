@@ -1,3 +1,9 @@
+-----
+
+> NOTE: this project is not being maintained. You might be interested in https://github.com/higlass/simple-httpfs which implements a similar concept!
+
+-----
+
 HttpFs
 ======
 
